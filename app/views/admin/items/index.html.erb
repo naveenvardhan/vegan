@@ -1,0 +1,56 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Inventory Items</h1>
+    <%= link_to 'Add New Item', new_admin_item_path, class: 'btn btn-primary' %>
+  </div>
+  
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <%= form_with url: admin_items_path, method: :get, class: "row g-3" do |f| %>
+        <div class="col-md-6">
+          <%= f.text_field :query, value: params[:query], class: "form-control", placeholder: "Search items..." %>
+        </div>
+        <div class="col-md-3">
+          <%= f.select :category, Item.pluck(:category).uniq, { include_blank: 'All Categories', selected: params[:category] }, { class: "form-select" } %>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+          <%= f.submit "Search", class: "btn btn-primary w-100" %>
+          <%= link_to "Reset", admin_items_path, class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <table class="table table-hover align-middle shadow-sm bg-white">
+    <thead class="table-dark">
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price/MRP</th>
+        <th>Stock Unit</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td>
+            <img src="/items/<%= item.image_path %>" style="width: 50px; height: 50px; object-fit: cover;" class="rounded border">
+          </td>
+          <td class="fw-bold"><%= item.name %></td>
+          <td><span class="badge bg-info text-dark"><%= item.category %></span></td>
+          <td>
+            ₹<%= item.price %> 
+            <small class="text-muted text-decoration-line-through">₹<%= item.mrp %></small>
+          </td>
+          <td><%= item.quantity %> <%= item.unit %></td>
+          <td>
+            <%= link_to 'Edit', edit_admin_item_path(item), class: 'btn btn-sm btn-outline-primary' %>
+            <%#= link_to 'Delete', item_path(item), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

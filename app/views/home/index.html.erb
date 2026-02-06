@@ -1,0 +1,43 @@
+<div class="container py-5">
+  <div class="p-5 mb-4 bg-light rounded-3 shadow-sm" style="background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('http://localhost:3000/items/banner-2.jpg'); background-size: cover;">
+    <div class="container-fluid py-5 text-center">
+      <h1 class="display-5 fw-bold text-success">Vegan</h1>
+      <p class="fs-4">Farm Fresh Vegetables & Seasonal Fruits directly from local farmers. Ready to deliver!</p>
+      <button class="btn btn-success btn-lg" type="button">Browse Fruits</button>
+    </div>
+  </div>
+
+  <h2 class="mb-4">Today's Deal: Lowest Price Guaranteed</h2>
+
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    <% @items.each do |item| %>
+      <div class="col">
+        <div class="card h-100 border-0 shadow-sm">
+            <% file_exists = File.exist?(Rails.public_path.join("items", item.image_path)) %>
+
+            <% if file_exists %>
+              <img src="/items/<%= item.image_path %>" class="card-img-top" style="height: 200px; object-fit: cover;" alt="<%= item.name %>">
+            <% else %>
+              <img src="/items/placeholder.png" class="card-img-top" style="height: 200px; object-fit: cover;" alt="<%= item.name %>">
+            <% end %>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col col-lg-12">
+                  <h5 class="card-title text-nowrap overflow-hidden" style="text-overflow: ellipsis;">
+                    <%= truncate(item.name, length: 25) %>
+                  </h5>
+                </div>
+                <div class="col">
+                  <p class="text-success fw-bold">₹<%= item.price %> / <%= item.unit %></p>
+                </div>
+              </div>
+              <%= turbo_frame_tag "item_#{item.id}_cart_control" do %>
+                <%= render "item", item: item %>
+              <% end %>
+            </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center p-5">
+          <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+             <span class="h1 text-success mb-0"><%= @customer.name[0] %></span>
+          </div>
+          <h2 class="fw-bold"><%= @customer.name %></h2>
+          <span class="badge <%= @customer.is_active ? 'bg-success' : 'bg-danger' %> mb-4">
+            <%= @customer.is_active ? 'Active Account' : 'Inactive' %>
+          </span>
+
+          <div class="text-start border-top pt-4">
+            <p><strong>Email:</strong> <%= @customer.email %></p>
+            <p><strong>Phone:</strong> <%= @customer.phone %></p>
+            <p><strong>Gender:</strong> <%= @customer.gender %></p>
+            <p><strong>Joined:</strong> <%= @customer.created_at.strftime("%B %d, %Y") %></p>
+          </div>
+
+          <div class="mt-4 d-grid gap-2 d-md-block">
+            <%= link_to 'Edit Profile', edit_admin_customer_path(@customer), class: 'btn btn-primary' %>
+            <%= link_to 'Back to List', admin_customers_path, class: 'btn btn-outline-secondary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

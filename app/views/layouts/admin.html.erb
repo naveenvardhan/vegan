@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vegan</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-cache-control" content="no-cache">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+      <div class="container">
+        <%= link_to admin_orders_path, class: "navbar-brand d-flex align-items-center" do %>
+          <img src="/logos/logo-blue.png" height="40" class="me-2">
+          <span class="fw-bold text-success">VEGAN</span><span class="fw-bold text-white">ADMIN</span>
+        <% end %>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="adminNavbar">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <%= link_to admin_orders_path, class: "nav-link #{'active' if controller_name == 'orders'}" do %>
+                <i class="bi bi-receipt me-1"></i> Orders
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to admin_items_path, class: "nav-link #{'active' if controller_name == 'items'}" do %>
+                <i class="bi bi-box-seam me-1"></i> Inventory
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to admin_customers_path, class: "nav-link #{'active' if controller_name == 'customers'}" do %>
+                <i class="bi bi-people me-1"></i> Customers
+              <% end %>
+            </li>
+          </ul>
+          
+          <div class="d-flex align-items-center text-white-50">
+            <small><i class="bi bi-person-circle me-1"></i> Administrator</small>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="py-4">
+      <%= yield %>
+    </main>
+  </body>
+</html>

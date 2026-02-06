@@ -1,0 +1,17 @@
+<tr class="nested-fields" data-new-record="<%= f.object.new_record? %>">
+  <td>
+    <%= f.collection_select :item_id, Item.all, :id, :name, { prompt: "Select Product" }, { class: "form-select", data: { action: "change->nested-form#updatePrice" } } %>
+  </td>
+  <td>
+    <%= f.number_field :quantity, class: "form-control", step: "0.01", placeholder: "Qty" %>
+  </td>
+  <td>
+    <%= f.number_field :price_at_order, class: "form-control", step: "0.01", placeholder: "Price" %>
+  </td>
+  <td class="text-center">
+    <%= f.hidden_field :_destroy %>
+    <button type="button" class="btn btn-outline-danger btn-sm" data-action="nested-form#remove">
+      <i class="bi bi-trash"></i> Remove
+    </button>
+  </td>
+</tr>

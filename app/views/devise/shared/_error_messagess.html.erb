@@ -1,0 +1,9 @@
+<% if resource.errors.any? %>
+  <div class="alert alert-danger border-0 shadow-sm rounded-3 d-flex align-items-center" role="alert">
+    <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+    <div>
+      <div class="fw-bold">Check your details</div>
+      <small>We found <%= pluralize(resource.errors.count, "error") %> that need your attention.</small>
+    </div>
+  </div>
+<% end %>

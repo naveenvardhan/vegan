@@ -1,0 +1,24 @@
+<div id="item_<%= item.id %>_cart_control">
+  <% cart_item = @cart&.cart_items&.find_by(item_id: item.id) %>
+
+  <% if cart_item %>
+    <div class="d-flex align-items-center justify-content-between bg-white rounded shadow-sm border border-success overflow-hidden" style="max-width: 180px;">
+      <%= button_to cart_items_path(item_id: item.id, adjustment: "minus"), method: :post, class: "btn btn-sm rounded-0 border-0 px-2 py-0 font-22" do %>
+        <i class="bi bi-dash-lg fw-bold"></i>
+      <% end %>
+
+      <span class="fw-bold px-2 text-dark" style="min-width: 30px; text-align: center;">
+        <%= cart_item.quantity %>
+      </span>
+
+      <%= button_to cart_items_path(item_id: item.id, adjustment: "plus"), method: :post, class: "btn btn-sm rounded-0 border-0 px-2 py-0 font-22" do %>
+        <i class="bi bi-plus-lg fw-bold"></i>
+      <% end %>
+
+    </div>
+  <% else %>
+    <%= button_to cart_items_path(item_id: item.id), method: :post, class: "btn btn-success w-100" do %>
+      <i class="bi bi-cart-plus me-1"></i> Add to Cart
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,76 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-dark text-white py-3">
+          <h4 class="mb-0"><i class="bi bi-shield-lock me-2"></i>Complete Your Order</h4>
+        </div>
+        
+        <div class="card-body p-4">
+          <% current_customer = Customer.first %>
+          <%= form_with(model: @order) do |f| %>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold"><i class="bi bi-geo-alt me-1"></i>Select Delivery Address</label>
+              <div class="row g-3">
+                <% if current_customer&.addresses&.any? %>
+                  <% current_customer.addresses.each do |address| %>
+                    <div class="col-12">
+                      <div class="border rounded p-3 position-relative">
+                        <div class="form-check">
+                          <%= f.radio_button :address_id, address.id, checked: address.is_default, class: "form-check-input" %>
+                          <%= f.label "address_id_#{address.id}", class: "form-check-label w-100" do %>
+                            <span class="fw-bold d-block"><%= address.line_1 %></span>
+                            <small class="text-muted">
+                              <%= [address.line_2, address.area, address.city, address.zip].compact.join(", ") %>
+                            </small>
+                            <% if address.is_default %>
+                              <span class="badge bg-info text-dark ms-2" style="font-size: 0.7rem;">Default</span>
+                            <% end %>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div class="col-12">
+                    <div class="alert alert-warning py-2 small">
+                      No saved addresses found. <%= link_to "Add New Address", root_path, class: "fw-bold" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="mb-4">
+              <label class="form-label fw-bold"><i class="bi bi-credit-card me-1"></i>Payment Method</label>
+              <%= f.select :payment_type, 
+                  Order.payment_types.keys.map { |k| [k.titleize, k] }, 
+                  { prompt: 'Select' }, 
+                  { class: "form-select " } %>
+            </div>
+
+            <div class="bg-light p-4 rounded-4 border">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Subtotal:</span>
+                <span class="fw-bold">₹<%= @cart.total_price %></span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Delivery Fee:</span>
+                <span class="text-success fw-bold small text-uppercase">Free</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                <span class="h5 mb-0 fw-bold">Grand Total:</span>
+                <span class="h4 mb-0 fw-bold text-success">₹<%= @cart.total_price %></span>
+              </div>
+            </div>
+
+            <%= f.submit "Confirm Order", class: "btn btn-success btn-lg w-100 mt-4 py-3 fw-bold rounded-pill shadow-sm" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

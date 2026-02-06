@@ -1,0 +1,92 @@
+<div class="container ">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+        <div class="card-header bg-white py-3">
+          <h4 class="mb-0 fw-bold"><i class="bi bi-cart-check me-2 text-success"></i>Your Shopping Cart</h4>
+        </div>
+        
+        <div class="card-body p-0">
+          <% if @cart_items.any? %>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                  <tr>
+                    <th class="px-2">Item</th>
+                    <th>Price</th>
+                    <th class="text-center">Quantity</th>
+                    <!-- <th class="text-end pe-4">Total</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @cart_items.each do |cart_item| %>
+                    <tr>
+                      <td class="px-2">
+                        <div class="d-flex align-items-center">
+                          <img src="/items/<%= cart_item.item.image_path %>" class="rounded-3 me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                          <div>
+                            <div class="fw-bold text-dark"><%= cart_item.item.name %></div>
+                            <small class="text-muted"><%= cart_item.item.unit %></small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        ₹<%= cart_item.item.price %><br>
+                        <span class="text-center pe-4 fw-bold" id="item_<%= cart_item.item.id %>_line_total" style="font-size: 13px;">(₹<%= cart_item.item.price * cart_item.quantity %>)</span>
+                      </td>
+                      <td style="width: 160px;">
+                        <%# Reuse your +/- buttons here %>
+                        <%= render "home/item", item: cart_item.item %>
+                        
+                      </td>
+                      <!-- <td >
+                        
+                      </td> -->
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <div class="text-center py-5">
+              <i class="bi bi-cart-x text-muted" style="font-size: 3rem;"></i>
+              <p class="mt-3 fs-5">Your cart is feeling lonely.</p>
+              <%= link_to "Browse Vegetables", root_path, class: "btn btn-success" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card shadow-sm border-0 rounded-4 px-4 sticky-top" style="top: 100px;">
+        <h5 class="fw-bold mb-4">Order Summary</h5>
+        
+        <div class="d-flex justify-content-between mb-2 text-muted">
+          <span>Items Total</span>
+          <span id="cart_items_total">₹<%= @cart.total_price %></span>
+        </div>
+        
+        <div class="d-flex justify-content-between mb-2 text-muted">
+          <span>Delivery Charges</span>
+          <span class="text-success small fw-bold text-uppercase">Free</span>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="d-flex justify-content-between mb-4">
+          <span class="h5 fw-bold">Estimated Total</span>
+          <span class="h5 fw-bold text-success" id="cart_grand_total">₹<%= @cart.total_price %></span>
+        </div>
+
+        <% if @cart_items.any? %>
+          <%= link_to "Place Order", new_order_path, class: "btn btn-success btn-lg w-100 fw-bold" %>
+        <% end %>
+
+        <div class="mt-3 text-center">
+          <small class="text-muted"><i class="bi bi-shield-check me-1"></i> Secure Checkout</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
