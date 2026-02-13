@@ -1,7 +1,7 @@
-# Use Ruby 3.1.2 as base image
-FROM ruby:3.1.2-slim
+# Stage 1: Builder
+FROM ruby:3.1.2-slim as builder
 
-# Install essential packages and dependencies
+# Install build dependencies
 RUN apt-get update -qq && \
     apt-get install -y \
     build-essential \
@@ -12,14 +12,16 @@ RUN apt-get update -qq && \
     imagemagick \
     libvips \
     curl \
+    git \
     && npm install -g yarn \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Install gems
+# Copy Gemfiles
 COPY Gemfile Gemfile.lock ./
+
+# Install gems
 RUN bundle lock --add-platform x86_64-linux && \
     bundle config set --local without 'development test' && \
     bundle install --jobs 4 --retry 3
@@ -30,19 +32,34 @@ COPY . .
 # Install Node.js dependencies if package.json exists
 RUN if [ -f package.json ]; then yarn install --production --frozen-lockfile; fi
 
-# Skip asset precompilation during build - will be done on first run
-# This avoids issues with cssbundling-rails dependency on yarn
+# Precompile assets
+RUN bundle exec rails assets:precompile
+
+# Stage 2: Runtime
+FROM ruby:3.1.2-slim
+
+# Install only runtime dependencies
+RUN apt-get update -qq && \
+    apt-get install -y \
+    libpq5 \
+    nodejs \
+    postgresql-client \
+    imagemagick \
+    libvips \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy gems from builder stage
+COPY --from=builder /usr/local/bundle /usr/local/bundle
+
+# Copy application code from builder stage
+COPY --from=builder /app .
 
 # Create directories for storage and tmp files
 RUN mkdir -p tmp/pids tmp/sockets log storage public/assets && \
     chmod -R 755 tmp log storage public
-
-# Create non-root user (commented out for production to avoid permission issues)
-# RUN groupadd -r app && useradd -r -g app app && \
-#     chown -R app:app /app
-
-# Switch to non-root user (commented out for production)
-# USER app
 
 # Expose port 3000
 EXPOSE 3000
