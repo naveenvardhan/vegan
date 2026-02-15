@@ -14,6 +14,11 @@ class Order < ApplicationRecord
   enum status: { pending: 'pending', accepted: 'accepted', in_transit: 'in_transit', rejected: 'rejected', completed: 'completed' }
   enum :payment_type, { cash_on_delivery: "cash_on_delivery", upi: "upi" }
 
+  def update_total
+    calculate_totals
+    self.save!
+  end
+
   private
 
   def generate_invoice_number

@@ -1,0 +1,107 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Order Details</h2>
+
+  <% if @order.present? %>
+
+    <!-- Invoice + Status -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <p><strong>Invoice Number:</strong> <%= @order.invoice_number %></p>
+        <p><strong>Order Date:</strong> <%= @order.order_date.strftime("%d %b %Y, %I:%M %p") %></p>
+        <p><strong>Status:</strong>
+          <span class="badge bg-warning text-dark">
+            <%= @order.status.capitalize %>
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Customer Details -->
+    <div class="card mb-4" style="display:none;">
+      <div class="card-header"><strong>Customer Details</strong></div>
+      <div class="card-body">
+        <p><strong>Name:</strong> <%= @order.customer&.name %></p>
+        <p><strong>Phone:</strong> <%= @order.customer&.phone %></p>
+      </div>
+    </div>
+
+    <!-- Delivery Address -->
+    <div class="card mb-4">
+      <div class="card-header"><strong>Delivery Address</strong></div>
+      <div class="card-body">
+        <% if @order.address.present? %>
+          <p>
+            <%= @order.address.full_address %>
+          </p>
+        <% else %>
+          <p>No address available</p>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="card mb-4">
+      <div class="card-header"><strong>Order Items</strong></div>
+      <div class="card-body">
+
+        <% if @order.order_items.any? %>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @order.order_items.each do |order_item| %>
+                <tr>
+                  <td class="px-2">
+                    <div class="d-flex align-items-center">
+                      <img src="/items/<%= order_item.item.image_path %>" class="rounded-3 me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                      <%= order_item.item&.name %>
+                    </div>
+                  </td>
+                  <td><%= "#{order_item.quantity} #{order_item.item.unit}" %></td>
+                  <td>₹<%= (order_item.price_at_order) %></td>
+                  <td>
+                    ₹<%= (order_item.quantity * order_item.price_at_order) %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p>No items found for this order.</p>
+        <% end %>
+
+      </div>
+    </div>
+
+    <!-- Pricing Summary -->
+    <div class="card mb-4">
+      <div class="card-header"><strong>Price Summary</strong></div>
+      <div class="card-body">
+        <p><strong>Sub Total:</strong> <%= (@order.sub_total || 0) %></p>
+        <!-- <p><strong>GST:</strong> <%= (@order.gst || 0) %></p> -->
+        <p><strong>Delivery Charge:</strong> <%= (@order.delivery_charge || 0) %></p>
+        <!-- <p><strong>Discount:</strong> <%= (@order.discount || 0) %></p> -->
+
+        <hr>
+
+        <h5>
+          <strong>Total Amount:</strong>
+          <%= (@order.total_amount || 0) %>
+        </h5>
+
+        <p><strong>Payment Type:</strong> <%= @order.payment_type || "Not specified" %></p>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="alert alert-danger">
+      Order not found.
+    </div>
+  <% end %>
+</div>

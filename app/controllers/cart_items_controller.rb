@@ -30,6 +30,8 @@ class CartItemsController < ApplicationController
         render turbo_stream: [
           # Update the +/- buttons
           turbo_stream.replace("item_#{@item.id}_cart_control", partial: "home/item", locals: { item: @item }),
+          
+          turbo_stream.replace("item_#{@item.id}_cart_control_mobile", partial: "home/item", locals: { item: @item }),
           # Update the line total for this specific item in the cart table
           turbo_stream.update("item_#{@item.id}_line_total", "(₹#{@cart_item.quantity * @item.price})"),
           # Update the grand total in the sidebar

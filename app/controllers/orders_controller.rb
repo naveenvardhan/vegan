@@ -9,6 +9,8 @@ class OrdersController < ApplicationController
   # end
   
   def new
+    # Case 1: Not logged in
+    # debugger
     if current_customer.nil?
       # Store the intended destination so we can return after signup
       session[:return_to] = new_order_path
@@ -16,12 +18,20 @@ class OrdersController < ApplicationController
       return
     end
 
+    # Case 2: Logged in but has no addresses
+    if current_customer.addresses.empty?
+      redirect_to new_address_path(redirect_to_checkout: true), notice: "Please add a delivery address to continue."
+      return
+    end
+
+    # Case 3: Logged in and has address (Success)
     @order = Order.new
     @addresses = current_customer.addresses
     @cart_items = @cart.cart_items
   end
 
   def create
+    # binding.pry
     @order = Order.new(order_params)
     @order.customer = current_customer if current_customer
     @order.status = "pending"
@@ -37,6 +47,7 @@ class OrdersController < ApplicationController
           price_at_order: ci.item.price
         )
       end
+      @order.update_total
       
       # Clear the cart
       @cart.cart_items.destroy_all
@@ -48,9 +59,14 @@ class OrdersController < ApplicationController
     end
   end
 
+  def show
+    @order = Order.find params[:id]
+    # @order = Order.includes(order_items: :street_post, :package, :payment).find_by(id: params[:id])
+  end
+
   private
 
   def order_params
-    params.require(:order).permit(:address_id, :delivery_type, :notes)
+    params.require(:order).permit(:address_id, :delivery_type, :notes, :payment_type)
   end
 end

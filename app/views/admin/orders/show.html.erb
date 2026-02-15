@@ -5,7 +5,11 @@
         <!-- <button onclick="window.print()" class="btn btn-outline-dark me-2">
           <i class="bi bi-printer"></i> Print Invoice
         </button> -->
-        <%= link_to download_admin_order_path(@order, format: :pdf), class: "btn btn-danger" do %>
+        <%= link_to download_admin_order_path(@order, format: :pdf, view_invoice: true), class: "btn btn-success" do %>
+          <i class="bi bi-file-earmark-pdf"></i> View Invoice
+        <% end %>
+        
+        <%= link_to download_admin_order_path(@order, format: :pdf), class: "btn btn-success mx-2" do %>
           <i class="bi bi-file-earmark-pdf"></i> Download Invoice
         <% end %>
         <%= link_to 'Edit Order', edit_admin_order_path(@order), class: 'btn btn-primary' %>

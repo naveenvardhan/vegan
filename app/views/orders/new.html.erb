@@ -7,7 +7,6 @@
         </div>
         
         <div class="card-body p-4">
-          <% current_customer = Customer.first %>
           <%= form_with(model: @order) do |f| %>
             
             <div class="mb-4">
@@ -47,8 +46,8 @@
             <div class="mb-4">
               <label class="form-label fw-bold"><i class="bi bi-credit-card me-1"></i>Payment Method</label>
               <%= f.select :payment_type, 
-                  Order.payment_types.keys.map { |k| [k.titleize, k] }, 
-                  { prompt: 'Select' }, 
+                  Order.payment_types.slice("cash_on_delivery").keys.map { |k| [k.titleize, k] }, 
+                  { },
                   { class: "form-select " } %>
             </div>
 

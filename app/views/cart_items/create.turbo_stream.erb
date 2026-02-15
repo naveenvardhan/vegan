@@ -3,6 +3,7 @@
   <%= render partial: "home/item", locals: { item: @item, :@cart => @cart } %>
 <% end %>
 
+
 <% # 2. Update the navbar cart counter %>
 <%= turbo_stream.update "cart_count" do %>
   <%= @cart.cart_items.count %>

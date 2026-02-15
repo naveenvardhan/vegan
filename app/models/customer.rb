@@ -1,7 +1,7 @@
 # app/models/customer.rb
 class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :rememberable, authentication_keys: [:phone]
 
   has_many :addresses, as: :addressable, dependent: :destroy
 
@@ -10,6 +10,10 @@ class Customer < ApplicationRecord
   validates :phone, presence: true, uniqueness: true, numericality: { only_integer: true },length: { is: 10, message: "must be exactly 10 digits" }
 
   before_validation :generate_credentials, on: :create
+  
+  def update_default_address(add_id)
+    self.addresses.where.not(id: add_id).update_all(is_default: false)
+  end
 
   private
 
@@ -35,4 +39,5 @@ class Customer < ApplicationRecord
       where(conditions.to_h).first
     end
   end
+  
 end

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="icon" type="image/png" href="/logos/v-favicon.png">
+    <link rel="shortcut icon" href="/logos/v-favicon.png" type="image/x-icon">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="bg-light">
+    <%= yield %>
+  </body>
+</html>

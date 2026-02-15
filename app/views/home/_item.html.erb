@@ -17,8 +17,8 @@
 
     </div>
   <% else %>
-    <%= button_to cart_items_path(item_id: item.id), method: :post, class: "btn btn-success w-100" do %>
-      <i class="bi bi-cart-plus me-1"></i> Add to Cart
+    <%= button_to cart_items_path(item_id: item.id), method: :post, class: "btn btn-success w-80", style: "float:right;" do %>
+      <i class="bi bi-cart-plus me-1"></i> Add
     <% end %>
   <% end %>
 </div>

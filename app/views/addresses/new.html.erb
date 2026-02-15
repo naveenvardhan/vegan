@@ -1,0 +1,62 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-dark text-white py-3">
+          <h2 class="mb-0 h4">Add Delivery Address</h2>
+        </div>
+
+        <div class="card-body p-4">
+          <%= form_with model: @address, url: addresses_path, local: true, html: { novalidate: true } do |f| %>
+            <%= hidden_field_tag :redirect_to_checkout, @redirect_to_checkout %>
+
+            <div class="field mb-3">
+              <%= f.label :line_1, "Address Line 1", class: "form-label fw-bold" %>
+              <%= f.text_field :line_1, required: true, class: "form-control", placeholder: "House No, Building Name" %>
+            </div>
+
+            <div class="field mb-3">
+              <%= f.label :line_2, "Address Line 2", class: "form-label fw-bold" %>
+              <%= f.text_field :line_2, class: "form-control", placeholder: "Street, Locality" %>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= f.label :area, class: "form-label fw-bold" %>
+                <%= f.text_field :area, class: "form-control", placeholder: "Area Name" %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <%= f.label :landmark, class: "form-label fw-bold" %>
+                <%= f.text_field :landmark, class: "form-control", placeholder: "Near..." %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <%= f.label :zip, "Pincode", class: "form-label fw-bold" %>
+                <%= f.text_field :zip, value: '56', required: true, class: "form-control" %>
+              </div>
+              <div class="col-md-4 mb-3">
+                <%= f.label :city, class: "form-label fw-bold" %>
+                <%= f.text_field :city, required: true, value: 'Bengaluru', class: "form-control" %>
+              </div>
+              <div class="col-md-4 mb-3">
+                <%= f.label :state, class: "form-label fw-bold" %>
+                <%= f.text_field :state, required: true, value: 'Karnataka', class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="form-check mb-4">
+              <%= f.check_box :is_default, class: "form-check-input" %>
+              <%= f.label :is_default, "Set as default address", class: "form-check-label" %>
+            </div>
+
+            <div class="actions d-grid">
+              <%= f.submit "Save Address", class: "btn btn-dark btn-lg rounded-3" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

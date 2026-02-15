@@ -11,15 +11,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_customer
-    if session[:customer_id]
-      Customer.find_by_id session[:customer_id]
-    else
-      # session[:customer_id] ||= Customer.last.id
-      # Customer.last
-      nil
-    end
-  end
+  # def current_customer
+  #   binding.pry
+  #   if session[:customer_id]
+  #     Customer.find_by_id session[:customer_id]
+  #   else
+  #     # session[:customer_id] ||= Customer.last.id
+  #     Customer.last
+  #     # nil
+  #   end
+  # end
 
   protected
 
@@ -28,16 +29,30 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :phone, :business_type, :business_name])
     # Permit custom fields for account update
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :phone, :business_type, :business_name])
+
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:email])
   end
 
+  # def after_sign_up_path_for(resource)
+  #   # debugger
+  # 
+  #   if session[:return_to] == new_order_path
+  #     # Force user to add an address after signup
+  #     new_address_path(redirect_to_checkout: true)
+  #   else
+  #     root_path
+  #   end
+  # end
+  
   def after_sign_up_path_for(resource)
     debugger
     
-    if session[:return_to] == new_order_path
-      # Force user to add an address after signup
+    if session[:return_to].present?
+      # Clear the session after taking the value
+      path = session.delete(:return_to) 
       new_address_path(redirect_to_checkout: true)
     else
-      root_path
+      cart_path
     end
   end
 end

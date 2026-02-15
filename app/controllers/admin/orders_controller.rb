@@ -1,8 +1,6 @@
 class Admin::OrdersController < Admin::BaseController
   before_action :set_order, only: %i[show edit update destroy]
   
-  # layout 'admin'
-
   def index
     @orders = Order.includes(:customer).all
 
@@ -48,6 +46,7 @@ class Admin::OrdersController < Admin::BaseController
   
   def download
     @order = Order.find(params[:id])
+    view_invoice = params[:view_invoice] == 'true'
 
     respond_to do |format|
       format.html
@@ -56,7 +55,7 @@ class Admin::OrdersController < Admin::BaseController
         send_data pdf.render, 
           filename: "invoice_#{@order.invoice_number}.pdf",
           type: "application/pdf",
-          disposition: "inline" # "inline" displays in browser, "attachment" downloads it
+          disposition: view_invoice ? "inline" : "attachment" # "inline" displays in browser, "attachment" downloads it
           # disposition: "attachment" # "inline" displays in browser, "attachment" downloads it
       end
     end

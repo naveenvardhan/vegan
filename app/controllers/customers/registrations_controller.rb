@@ -1,5 +1,20 @@
 class Customers::RegistrationsController < Devise::RegistrationsController
-  before_action :set_cart
+  # before_action :set_cart
+  def create
+    super do |resource|
+      if resource.persisted?
+        # This block only runs if the customer was successfully saved
+        if session[:return_to].present?
+          # We don't even need after_sign_up_path_for if we handle it here
+          session.delete(:return_to)
+          set_flash_message! :notice, :signed_up
+          sign_up(resource_name, resource)
+          respond_with resource, location: new_address_path(redirect_to_checkout: true)
+          return
+        end
+      end
+    end
+  end
 
   protected
   
@@ -9,10 +24,14 @@ class Customers::RegistrationsController < Devise::RegistrationsController
 
 
   def after_sign_up_path_for(resource)
-    # This sends them to add an address immediately after the form is submitted
-    # new_address_path(redirect_to_checkout: true)
-    cart_path
+    if session[:return_to].present?
+      session.delete(:return_to)
+      new_address_path(redirect_to_checkout: true)
+    else
+      cart_path
+    end
   end
+
 end
 
 # Kalabairava astam

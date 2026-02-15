@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   # devise_for :customers
   
   devise_for :customers, controllers: {
-    registrations: 'customers/registrations'
+    registrations: 'customers/registrations',
+    sessions: 'customers/sessions'
   }
 
   get 'home/index'
@@ -14,6 +15,8 @@ Rails.application.routes.draw do
   resources :cart_items, only: [:create]
   resource :cart, only: [:show]
   resources :orders, only: [:new, :create, :show]
+  resources :addresses, only: [:new, :create]
+
 
   # resources :customers
   # resources :orders do
@@ -21,7 +24,14 @@ Rails.application.routes.draw do
   #     get  :download
   #   end
   # end
-  
+  # devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+  # /users/sign_in
+  # /users/sign_out
+  # /users/password/new
+
   namespace :admin do
     resources :items
     resources :orders do
