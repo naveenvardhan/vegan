@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Documentation
+README.md
+*.md
+
+# Logs
+log/*
+tmp/*
+*.log
+
+# Development/Test
+test/
+spec/
+.rspec
+coverage/
+
+# Node modules (will be installed in container)
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Credentials
+config/master.key
+config/credentials/*.key

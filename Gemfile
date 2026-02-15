@@ -43,7 +43,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # Use Sass to process CSS
-# gem "sassc-rails"
+gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -56,7 +56,7 @@ group :development, :test do
 
   # Advanced interactive console
   gem "pry-rails"
-  
+
   # Optional: Adds 'show-source' and better navigation in Pry
   gem "pry-byebug"
 end
@@ -109,4 +109,4 @@ gem 'prawn-table'            # For PDF Invoices
 gem 'receipts'         # Invoice templates
 gem 'fast_excel'       # Bulk Order reports
 gem 'image_processing' # For Crop Image variants
-gem 'cssbundling-rails'
+# gem 'cssbundling-rails' # Commented out - using sprockets-rails instead
