@@ -27,7 +27,8 @@
         <th>Image</th>
         <th>Name</th>
         <th>Category</th>
-        <th>Price/MRP</th>
+        <th>Hotel Price/MRP</th>
+        <th>Seller Price</th>
         <th>Stock Unit</th>
         <th>Actions</th>
       </tr>
@@ -43,6 +44,9 @@
           <td>
             ₹<%= item.price %> 
             <small class="text-muted text-decoration-line-through">₹<%= item.mrp %></small>
+          </td>
+          <td>
+            ₹<%= item.seller_price.to_f %> 
           </td>
           <td><%= item.quantity %> <%= item.unit %></td>
           <td>

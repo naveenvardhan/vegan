@@ -9,14 +9,19 @@
     <%= f.select :category, ['vegetables', 'fruits', 'grocery'], { prompt: 'Select Category' }, { class: "form-select" } %>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-4">
     <%= f.label :mrp, "MRP (₹)", class: "form-label" %>
     <%= f.number_field :mrp, step: 0.01, class: "form-control" %>
   </div>
 
-  <div class="col-md-3">
-    <%= f.label :price, "Selling Price (₹)", class: "form-label" %>
+  <div class="col-md-4">
+    <%= f.label :price, "Hotel Price (₹)", class: "form-label" %>
     <%= f.number_field :price, step: 0.01, class: "form-control" %>
+  </div>
+  
+  <div class="col-md-4">
+    <%= f.label :seller_price, "Seller Price (₹)", class: "form-label" %>
+    <%= f.number_field :seller_price, step: 0.01, class: "form-control" %>
   </div>
 
   <div class="col-md-3">

@@ -55,6 +55,16 @@ class Item < ApplicationRecord
     filename
   end
 
+  def get_price(customer = nil)
+    # binding.pry
+    business_type = customer&.business_type || 'Hotels & Restaurants'
+    if business_type == 'Seller'
+      seller_price
+    else
+      price
+    end
+  end
+
   def self.price_map
     all.pluck(:id, :price).to_h
   end

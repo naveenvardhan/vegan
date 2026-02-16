@@ -30,8 +30,8 @@
                         </div>
                       </td>
                       <td>
-                        ₹<%= cart_item.item.price %><br>
-                        <span class="text-center pe-4 fw-bold" id="item_<%= cart_item.item.id %>_line_total" style="font-size: 13px;">(₹<%= cart_item.item.price * cart_item.quantity %>)</span>
+                        ₹<%= cart_item.item.get_price(current_customer) %><br>
+                        <span class="text-center pe-4 fw-bold" id="item_<%= cart_item.item.id %>_line_total" style="font-size: 13px;">(₹<%= cart_item.item.get_price(current_customer) * cart_item.quantity %>)</span>
                       </td>
                       <td style="width: 160px;">
                         <%# Reuse your +/- buttons here %>
@@ -54,13 +54,14 @@
       </div>
     </div>
 
+    <% total_price = @cart.total_price(current_customer) %>
     <div class="col-lg-4" style="padding-bottom: 400px;">
       <div class="card shadow-sm border-0 rounded-4 px-4 sticky-top" style="top: 100px;">
         <h5 class="fw-bold mb-4">Order Summary</h5>
         
         <div class="d-flex justify-content-between mb-2 text-muted">
           <span>Items Total</span>
-          <span id="cart_items_total">₹<%= @cart.total_price %></span>
+          <span id="cart_items_total">₹<%= total_price %></span>
         </div>
         
         <div class="d-flex justify-content-between mb-2 text-muted">
@@ -72,7 +73,7 @@
 
         <div class="d-flex justify-content-between mb-4">
           <span class="h5 fw-bold">Estimated Total</span>
-          <span class="h5 fw-bold text-success" id="cart_grand_total">₹<%= @cart.total_price %></span>
+          <span class="h5 fw-bold text-success" id="cart_grand_total">₹<%= total_price %></span>
         </div>
 
         <% if @cart_items.any? %>

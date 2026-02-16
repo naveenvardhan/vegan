@@ -1,4 +1,4 @@
-<div class="container py-5">
+<div class="container py-1" style="padding-bottom: 300px !important">
   <div class="row justify-content-center">
     <div class="col-md-7">
       <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
@@ -49,12 +49,14 @@
                   Order.payment_types.slice("cash_on_delivery").keys.map { |k| [k.titleize, k] }, 
                   { },
                   { class: "form-select " } %>
+          
+              <span class="font-14"> <strong>Note:</strong> Please pay the Delivery Boy after delivery.</span>
             </div>
-
+            <% total_price = @cart.total_price(current_customer) %>
             <div class="bg-light p-4 rounded-4 border">
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-muted">Subtotal:</span>
-                <span class="fw-bold">₹<%= @cart.total_price %></span>
+                <span class="fw-bold">₹<%= total_price %></span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-muted">Delivery Fee:</span>
@@ -62,7 +64,7 @@
               </div>
               <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                 <span class="h5 mb-0 fw-bold">Grand Total:</span>
-                <span class="h4 mb-0 fw-bold text-success">₹<%= @cart.total_price %></span>
+                <span class="h4 mb-0 fw-bold text-success">₹<%= total_price %></span>
               </div>
             </div>
 

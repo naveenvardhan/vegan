@@ -9,8 +9,9 @@
   <!-- 🔍 Search Bar -->
   <!-- <div class="sticky-top bg-white pt-2 pb-2"> -->
   <div class="bg-white pb-2">
-    <%= form_with url: root_path, method: :get, local: true, class: "d-flex" do |f| %>
-      <%= f.text_field :query, value: params[:query], placeholder: "Search Vegetables", class: "form-control rounded-pill me-2" %>
+    <!-- local: true for not turbo -->
+    <%= form_with url: root_path, method: :get, data: { turbo_frame: "items_list" }, class: "d-flex" do |f| %>
+      <%= f.text_field :query, value: params[:query], placeholder: "Search Vegetables", class: "form-control rounded-pill me-2", data: {controller: "search", action: "input->search#submit"} %>
       <button class="btn btn-success rounded-pill px-3">
         <i class="bi bi-search"></i>
       </button>
@@ -43,40 +44,9 @@
   <div class="">
     <div class="card border-0 shadow-sm">
       <div class="card-body p-1">
-
-        <% @items.each do |item| %>
-          <div class="d-flex align-items-center py-1 border-bottom">
-
-            <% file_exists = File.exist?(Rails.public_path.join("items", item.image_path)) %>
-
-            <% if file_exists %>
-              <img src="/items/<%= item.image_path %>"
-                   class="rounded-3 me-3"
-                   style="width: 70px; height: 70px; object-fit: cover;">
-            <% else %>
-              <img src="/items/placeholder.png"
-                   class="rounded-3 me-3"
-                   style="width: 70px; height: 70px; object-fit: cover;">
-            <% end %>
-
-            <div class="flex-grow-1">
-              <div class="fw-bold text-dark">
-                <%= item.name %>
-              </div>
-
-              <div class="text-success small">
-                ₹<%= item.price %> / <%= item.unit %>
-              </div>
-            </div>
-            <div class="flex-grow-1" style="max-width:115px;">
-              <div class="mt-2">
-                <%= turbo_frame_tag "item_#{item.id}_cart_control" do %>
-                  <%= render "item", item: item %>
-                <% end %>
-              </div>
-            </div>
-
-          </div>
+        
+        <%= turbo_frame_tag "items_list" do %>
+          <%= render partial: "items_list", locals: { items: @items } %>
         <% end %>
 
       </div>

@@ -34,7 +34,7 @@
           <% end %>
           
            <%# link_to destroy_customer_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-dark px-2 py-1 rounded-4"  %>
-          <% if true || current_customer.present? %>
+          <% if current_customer.present? %>
             <%= link_to root_path, data: {  }, class: "btn btn-outline-dark px-2 py-1 rounded-4", style: "margin-left:10px;" do %>
               <i class="bi bi-person"></i>
             <% end %>

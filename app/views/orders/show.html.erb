@@ -1,7 +1,8 @@
-<div class="container mt-4">
-  <h2 class="mb-4">Order Details</h2>
+<div class="container py-1" style="padding-bottom: 300px !important;">
+  <h2 class="mb-4 text-success">Your Order has been successfully placed!</h2>
 
   <% if @order.present? %>
+    <p><strong>Order Details</strong> </p>
 
     <!-- Invoice + Status -->
     <div class="card mb-4">
@@ -95,7 +96,11 @@
           <%= (@order.total_amount || 0) %>
         </h5>
 
-        <p><strong>Payment Type:</strong> <%= @order.payment_type || "Not specified" %></p>
+        <p>
+          <strong>Payment Type:</strong> Cash on Delivery
+          <br>
+          <span class="font-14"> <strong>Note:</strong> Please pay the Delivery Boy after delivery.</span>
+        </p>
       </div>
     </div>
 

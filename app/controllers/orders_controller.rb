@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.customer = current_customer if current_customer
     @order.status = "pending"
-    @order.total_amount = @cart.total_price
+    @order.total_amount = @cart.total_price(current_customer)
     @order.order_date = Time.current
 
     if @order.save
@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
         @order.order_items.create!(
           item_id: ci.item_id,
           quantity: ci.quantity,
-          price_at_order: ci.item.price
+          price_at_order: ci.item.get_price(current_customer)
         )
       end
       @order.update_total

@@ -4,12 +4,20 @@ class CartItemsController < ApplicationController
   def create
     @item = Item.find(params[:item_id])
     @cart_item = @cart.cart_items.find_or_initialize_by(item_id: @item.id)
+    if @cart_item.new_record?
+      @cart_item.quantity = 0
+    else
+      @cart_item.quantity ||= 0
+    end
+    # binding.pry
     
     # Handle increment/decrement from params, default to 1
     if params[:adjustment] == "plus"
       @cart_item.quantity += 1
     elsif params[:adjustment] == "minus"
       @cart_item.quantity -= 1
+    elsif params[:quantity].present?
+      @cart_item.quantity += params[:quantity].to_i
     else
       @cart_item.quantity = 1
     end
@@ -19,6 +27,7 @@ class CartItemsController < ApplicationController
     else
       @cart_item.save
     end
+    total_price = @cart.total_price(current_customer)
 
     respond_to do |format|
       format.turbo_stream # For instant UI updates
@@ -33,11 +42,11 @@ class CartItemsController < ApplicationController
           
           turbo_stream.replace("item_#{@item.id}_cart_control_mobile", partial: "home/item", locals: { item: @item }),
           # Update the line total for this specific item in the cart table
-          turbo_stream.update("item_#{@item.id}_line_total", "(₹#{@cart_item.quantity * @item.price})"),
+          turbo_stream.update("item_#{@item.id}_line_total", "(₹#{@cart_item.quantity * @item.get_price(current_customer)})"),
           # Update the grand total in the sidebar
-          turbo_stream.update("cart_grand_total", "₹#{@cart.total_price}"),
+          turbo_stream.update("cart_grand_total", "₹#{total_price}"),
           # Update the sidebar items total
-          turbo_stream.update("cart_items_total", "₹#{@cart.total_price}"),
+          turbo_stream.update("cart_items_total", "₹#{total_price}"),
           # Update the navbar badge
           turbo_stream.update("cart_count", @cart.cart_items.count)
         ]
