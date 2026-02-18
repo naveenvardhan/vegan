@@ -1,11 +1,7 @@
 class HomeController < ApplicationController
   before_action :set_cart
-
-  # def index
-  #   @items = Item.all
-  #   q = "%#{params[:query]}%"
-  #   @items = @items.where("name ILIKE ? OR description ILIKE ?", q, q)
-  # end
+  before_action :authenticate_customer!, except: [:index]
+  before_action :set_customer, except: [:index]
 
   def index
     if params[:query].present?
@@ -20,4 +16,36 @@ class HomeController < ApplicationController
     end
   end
 
+  def profile
+    @orders    = @customer.orders.order(created_at: :desc)
+    @addresses = @customer.addresses
+  end
+
+  def edit_profile
+  end
+
+  def update_profile
+    if @customer.update(customer_params)
+      redirect_to profile_path, notice: "Profile updated successfully."
+    else
+      flash.now[:alert] = "Failed to update profile."
+      render :edit_profile, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def set_customer
+    @customer = current_customer
+  end
+
+  def customer_params
+    params.require(:customer).permit(
+      :name,
+      :phone,
+      :gender,
+      :business_name,
+      :email
+    )
+  end
 end

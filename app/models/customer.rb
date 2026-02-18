@@ -4,6 +4,7 @@ class Customer < ApplicationRecord
          :rememberable, authentication_keys: [:phone]
 
   has_many :addresses, as: :addressable, dependent: :destroy
+  has_many :orders
 
   # Mandatory Fields
   validates :name, :phone, :business_name, :business_type, presence: true
@@ -11,6 +12,10 @@ class Customer < ApplicationRecord
 
   before_validation :generate_credentials, on: :create
   
+  def profile_name
+    name.split(' ').first
+  end
+
   def update_default_address(add_id)
     self.addresses.where.not(id: add_id).update_all(is_default: false)
   end

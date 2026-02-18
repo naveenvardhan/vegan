@@ -24,12 +24,14 @@ class Item < ApplicationRecord
     "Beans Haricut" => "beans-haricot.jpg",
     "Beans Nati" => "beans_nati.webp",
     "Bitter Gourd" => "bitter-gourd.webp", # Check if Chikkadi matches your bitter-gourd image
-    # "Beans - Chikkadi Kai" => "bitter-gourd.webp", # Check if Chikkadi matches your bitter-gourd image
+    "Beans - Chikkadi Kai" => "Chikkadi-kai.jpg", # Check if Chikkadi matches your bitter-gourd image
     "Beans - Cow Pea" => "beans-cowpeas.webp",
     "Tomato Nati" => "tomato.jpeg",
     "Ginger" => "ginger.jpg",
     "Garlic" => "garlic.webp",
+    "Green Chilli (Long)" => "chilli.jpg",
     "Green Chilli" => "chilli.jpg",
+    "Green chilli small" => "chilli.jpg",
     "Bajji Chilli" => "bajji-chilli.jpeg",
     "Curry Leaves" => "Curryleaves.webp",
     "Seeme Badnekayi" => "chowchow.webp",
@@ -47,7 +49,20 @@ class Item < ApplicationRecord
     "Dill Leaves (Sabbakshi)" => "dil-leaves.webp",
     "Mint (Pudina)" => "pudina.jpeg",
     "Spring Onion" => "spring-onion.webp",
-    "Cauliflower" => "cauli-flower.jpg"
+    "Cauliflower" => "cauli-flower.jpg",
+    "Cluster Beans / Gorikayi" => "gorikayi.jpeg",
+    "Arve soppu" => "arave-soppu.jpg",
+    "Chilkarve" => "chilk-arve.png",
+    "Chilkarve Soppu" => "chilk-arve.png",
+    "Dhantu" => "dhantu.jpg",
+    "Green peas" => "peas.jpeg",
+    "Raw Banana / Bale Kai" => "banana_raw.jpg",
+    "Avare Kai" => "avare-kai.jpeg",
+    "Drumstick" => "drumstick.jpg",
+    "Sweet Corn" => "sweet-corn.png",
+    "Baby Corn" => "baby-corn.jpg",
+    "Mushroom" => "mushroom.jpeg",
+    "Tomato Hybrid / Seeds" => "tomato-hybrid.jpeg",
   }.freeze
 
   def image_path
@@ -59,9 +74,9 @@ class Item < ApplicationRecord
     # binding.pry
     business_type = customer&.business_type || 'Hotels & Restaurants'
     if business_type == 'Seller'
-      seller_price
+      seller_price.to_i
     else
-      price
+      price.to_i
     end
   end
 

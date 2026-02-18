@@ -11,6 +11,10 @@ Rails.application.routes.draw do
 
   get 'home/index'
   root "home#index"
+  get "profile", to: "home#profile"
+  get   "profile/edit", to: "home#edit_profile",   as: :edit_profile
+  patch "profile",      to: "home#update_profile", as: :update_profile
+
   # resources :items
   resources :cart_items, only: [:create]
   resource :cart, only: [:show]

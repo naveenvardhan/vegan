@@ -20,7 +20,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top py-1">
       <div class="container">
         <%= link_to root_path, class: "navbar-brand d-flex align-items-center" do %>
           <img src="/logos/logo-orange.png" class="card-img-top" style="width: 100px; object-fit: cover;" alt="">
@@ -35,13 +35,41 @@
           
            <%# link_to destroy_customer_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-dark px-2 py-1 rounded-4"  %>
           <% if current_customer.present? %>
-            <%= link_to root_path, data: {  }, class: "btn btn-outline-dark px-2 py-1 rounded-4", style: "margin-left:10px;" do %>
-              <i class="bi bi-person"></i>
+            <div class="d-inline-flex flex-column align-items-center text-center mt-2" style="margin-left: 10px;">
+              <%= link_to profile_path, data: {  }, class: "btn btn-outline-dark px-1 py-0 rounded-4", style: "" do %>
+                <i class="bi bi-person"></i>
+              <% end %>
+              <span class="font-10"><%= current_customer&.profile_name %></span>
+            </div>
+          <% else %>
+            <%= link_to new_customer_registration_path, class: "text-decoration-none text-dark small", style: "margin-left: 10px;" do %>
+              <div>
+                Login
+              </div>
             <% end %>
           <% end %>
         </div>
       </div>
     </nav>
+    
+    <% if notice %>
+      <div class="container mt-1">
+        <div class="alert alert-success alert-dismissible fade show mb-1 py-2">
+          <%= notice %>
+          <button type="button" class="btn-close py-2 font-12 mt-2" data-bs-dismiss="alert"></button>
+        </div>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="container mt-1">
+        <div class="alert alert-danger alert-dismissible fade show mb-1 py-2">
+          <%= alert %>
+          <button type="button" class="btn-close py-2 font-12 mt-2" data-bs-dismiss="alert"></button>
+        </div>
+      </div>
+    <% end %>
+
 
     <%= yield %>
 

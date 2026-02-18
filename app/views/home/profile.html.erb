@@ -1,0 +1,170 @@
+<div class="container mb-5 mt-1" style="padding-bottom: 20rem;">
+  <!-- ===== PROFILE HEADER ===== -->
+  <div class="card shadow-lg border-0 rounded-4 mb-4">
+    <div class="card-body p-4">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h3 class="fw-bold mb-1"><%= @customer.name %></h3>
+          <p class="mb-1 text-muted">
+            <i class="bi bi-telephone"></i> <%= @customer.phone %>
+          </p>
+          <p class="mb-1 text-muted">
+            <i class="bi bi-envelope"></i> <%= @customer.email %>
+          </p>
+        </div>
+
+        
+      </div>
+
+      <hr>
+
+      <!-- Business Info -->
+      <div class="row">
+        <div class="col-md-4">
+          <strong>Business Name</strong>
+          <p><%= @customer.business_name.presence || "-" %></p>
+        </div>
+
+        <div class="col-md-4">
+          <strong>Business Type</strong>
+          <p><%= @customer.business_type.presence || "-" %></p>
+        </div>
+
+        <div class="col-md-4">
+          <strong>Gender</strong>
+          <p><%= @customer.gender.presence || "-" %></p>
+        </div>
+      </div>
+      
+      <div class="text-en d">
+        <% if @customer.is_kyc_verified? %>
+          <span class="badge bg-success px-3 py-2">KYC Verified</span>
+        <% else %>
+          <span class="badge bg-warning px-3 py-2">KYC Pending</span>
+        <% end %>
+
+        <br>
+
+        
+        
+        <%= button_to "Logout",
+            destroy_customer_session_path,
+            method: :delete,
+            data: { turbo: false },
+            class: "btn btn-danger rounded-2 py-0 mt-2", style: "float:right;" %>
+            
+        <%= link_to "Edit Profile",
+              edit_profile_path,
+              class: "btn btn-outline-primary btn-sm mt-2 rounded-3" %>
+
+              
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ===== ORDERS SECTION ===== -->
+  <div class="card shadow-sm border-0 rounded-4 mb-4">
+    <div class="card-header bg-dark text-white rounded-top-4">
+      <h5 class="mb-0">My Orders</h5>
+    </div>
+
+    <div class="card-body">
+
+      <% if @orders.any? %>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Order No.</th>
+                <th>Date</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @orders.each do |order| %>
+                <tr>
+                  <td class="fw-bold text-success">
+                    <%= link_to order.invoice_number, order_path(order) %>
+                  </td>
+
+                  <td>
+                    <%= order.created_at.strftime("%d %b %Y") %>
+                  </td>
+
+                  <!-- <td>
+                    <span class="badge bg-<%= status_color(order.status) %>">
+                      <%= order.status.titleize %>
+                    </span>
+                  </td> -->
+
+                  <td class="fw-bold">
+                    ₹<%= order.total_amount %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+
+          </table>
+        </div>
+      <% else %>
+        <p class="text-muted">No orders yet.</p>
+      <% end %>
+
+    </div>
+  </div>
+
+
+  <!-- ===== ADDRESS SECTION ===== -->
+  <div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top-4">
+      <h5 class="mb-0">Saved Addresses</h5>
+
+      <%= link_to "Add Address",
+            new_address_path,
+            class: "btn btn-light btn-sm rounded-3" %>
+    </div>
+
+    <div class="card-body">
+
+      <% if @addresses.any? %>
+        <div class="row">
+          <% @addresses.each do |address| %>
+            <div class="col-md-6 mb-3">
+              <div class="border rounded-4 p-3 position-relative">
+
+                <% if address.is_default? %>
+                  <span class="badge bg-success position-absolute top-0 end-0 m-2">
+                    Default
+                  </span>
+                <% end %>
+
+                <p class="mb-1"><%= "#{address.line_1}, #{address.line_2}" %></p>
+                <p class="mb-1"><%= address.area %></p>
+                <p class="mb-1">
+                  <%= address.city %>, <%= address.state %> - <%= address.zip %>
+                </p>
+
+                <% if address.landmark.present? %>
+                  <p class="text-muted small">
+                    Landmark: <%= address.landmark %>
+                  </p>
+                <% end %>
+
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-muted">No saved addresses.</p>
+      <% end %>
+
+    </div>
+  </div>
+
+
+
+</div>

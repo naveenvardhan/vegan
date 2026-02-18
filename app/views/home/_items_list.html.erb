@@ -18,13 +18,14 @@
         <%= item.name %>
       </div>
 
-      <div class="text-success small">
+      <div class="text-success">
         ₹<%= item.get_price(current_customer) %> / <%= item.unit %>
       </div>
       
-      <% if item.unit == 'kg' %>
+      <% if true || item.unit == 'kg' %>
         <div class="mt-1 d-flex gap-2">
-          <% [3,5,10].each do |qty| %>
+          <span class="font-10 pb-1 p-2 " style="color:gray;">Min: 2</span>
+          <% [3, 5, 10].each do |qty| %>
             <%= button_to cart_items_path(item_id: item.id, quantity: qty),
                   method: :post,
                   form: { data: { turbo_frame: "item_#{item.id}_cart_control" } },

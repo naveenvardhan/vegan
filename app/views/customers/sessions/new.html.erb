@@ -21,16 +21,38 @@
         </div>
         
         <div class="card-body p-4">
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { data: { turbo: false } }) do |f| %>
+            <% if resource.errors.any? %>
+              <div class="alert alert-danger">
+                <ul class="mb-0">
+                  <% resource.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
             <div class="field mb-3">
-              <%= f.label :name, class: "form-label" %><br />
+              <%= f.label :name, "Username", class: "form-label" %><br />
               <%= f.text_field :name, autofocus: true, class: "form-control" %>
+              
+              <% if resource.errors[:name].any? %>
+                <div class="text-danger small">
+                  <%= resource.errors[:name].first %>
+                </div>
+              <% end %>
             </div>
             
 
             <div class="mb-3">
               <%= f.label :phone, "Mobile Number", class: "form-label" %>
               <%= f.text_field :phone, class: "form-control" %>
+              
+              <% if resource.errors[:phone].any? %>
+                <div class="text-danger small">
+                  <%= resource.errors[:phone].first %>
+                </div>
+              <% end %>
             </div>
 
             <% if devise_mapping.rememberable? %>
