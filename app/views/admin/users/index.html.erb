@@ -1,0 +1,66 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Users</h1>
+    <%= link_to 'Add New User', new_admin_user_path, class: 'btn btn-primary' %>
+  </div>
+  
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <%= form_with url: admin_users_path, method: :get, class: "row g-3 align-items-end" do |f| %>
+        
+        <div class="col-md-5">
+          <%= f.label :query, "Search Name, Email, or Phone", class: "form-label small text-muted" %>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <%= f.text_field :query, value: params[:query], class: "form-control", placeholder: "Type to search..." %>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <%= f.label :role, "Role", class: "form-label small text-muted" %>
+          <%= f.select :status, 
+              User.roles.keys.map{|r| [r, r.humanize] }, 
+              { selected: params[:role] }, 
+              { class: "form-select" } %>
+        </div>
+
+        <div class="col-md-4">
+          <%= f.submit "Filter", class: "btn btn-primary px-4" %>
+          <%= link_to "Clear", admin_users_path, class: "btn btn-outline-secondary" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+
+  <table class="table table-hover shadow-sm bg-white">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody class="font-14">
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email.presence || 'N/A' %></td>
+          <td><%= user.phone %></td>
+          <td><%= user.role&.humanize %></td>
+          <td>
+            <span class="badge <%= user.present? ? 'bg-success' : 'bg-danger' %>">
+              <%= user.present? ? 'Active' : 'Inactive' %>
+            </span>
+          </td>
+          <td>
+            <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-sm btn-outline-primary' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

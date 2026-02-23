@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   # /users/password/new
 
   namespace :admin do
+    get "dashboard", to: "dashboard#index"
     resources :items
     resources :orders do
       member do
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
       end
     end
     resources :customers
+    resources :users
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -1,0 +1,109 @@
+<div class="container-fluid mt-4">
+
+  <!-- ===== DATE FILTER ===== -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <%= form_with url: admin_dashboard_path, method: :get, local: true, class: "row g-3" do %>
+
+        <div class="col-md-3">
+          <label class="form-label">From Date</label>
+          <%= date_field_tag :from_date, @from_date, class: "form-control" %>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">To Date</label>
+          <%= date_field_tag :to_date, @to_date, class: "form-control" %>
+        </div>
+
+        <div class="col-md-3 align-self-end">
+          <%= submit_tag "Filter", class: "btn btn-dark px-4" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+
+
+  <!-- ===== STATS CARDS ===== -->
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="card text-white bg-primary shadow">
+        <div class="card-body">
+          <h6>Total Orders</h6>
+          <h3><%= @total_orders %></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card text-white bg-success shadow">
+        <div class="card-body">
+          <h6>Total Revenue</h6>
+          <h3>₹<%= @total_amount %></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card text-white bg-info shadow">
+        <div class="card-body">
+          <h6>Total Items Sold</h6>
+          <h3><%= @total_items_sold %></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card text-white bg-danger shadow">
+        <div class="card-body">
+          <h6>Total Profit</h6>
+          <h3>₹<%= @total_profit.round(2) %></h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="card shadow-sm mt-4">
+  <div class="card-header bg-dark text-white">
+    <h5 class="mb-0">
+      Items Ordered (<%= @from_date.strftime("%d %b") %> - <%= @to_date.strftime("%d %b") %>)
+    </h5>
+  </div>
+
+  <div class="card-body">
+
+    <% if @items_ordered.any? %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Item Name</th>
+              <th>Total Quantity Sold</th>
+              <th>Total Sales</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @items_ordered.each do |item| %>
+              <tr>
+                <td class="fw-semibold"><%= item.name %></td>
+                <td><%= item.total_quantity %></td>
+                <td class="fw-bold text-success">
+                  ₹<%= item.total_sales.round(2) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-muted">No items ordered in selected date range.</p>
+    <% end %>
+
+  </div>
+</div>
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_02_15_070122) do
+ActiveRecord::Schema[7.0].define(version: 2026_02_21_185227) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +110,28 @@ ActiveRecord::Schema[7.0].define(version: 2026_02_15_070122) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "inventories", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.decimal "quantity"
+    t.decimal "cost_price"
+    t.date "stock_date"
+    t.decimal "remaining_quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_inventories_on_item_id"
+  end
+
+  create_table "inventory_transactions", force: :cascade do |t|
+    t.bigint "order_item_id", null: false
+    t.bigint "inventory_id", null: false
+    t.decimal "quantity"
+    t.decimal "cost_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inventory_id"], name: "index_inventory_transactions_on_inventory_id"
+    t.index ["order_item_id"], name: "index_inventory_transactions_on_order_item_id"
+  end
+
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "category"
@@ -205,6 +227,9 @@ ActiveRecord::Schema[7.0].define(version: 2026_02_15_070122) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "items"
   add_foreign_key "carts", "customers"
+  add_foreign_key "inventories", "items"
+  add_foreign_key "inventory_transactions", "inventories"
+  add_foreign_key "inventory_transactions", "order_items"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "customers"

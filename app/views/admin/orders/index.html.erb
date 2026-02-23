@@ -41,6 +41,7 @@
         <tr>
           <th>Invoice #</th>
           <th>Customer</th>
+          <th>Business</th>
           <th>Date</th>
           <th>Status</th>
           <th>Total</th>
@@ -51,8 +52,9 @@
         <% @orders.each do |order| %>
           <tr>
             <td class="fw-bold text-success"><%= link_to order.invoice_number, admin_order_path(order), class: '' %></td>
-            <td><%= order.customer&.name || "Walk-in" %></td>
-            <td><%= order.order_date&.strftime("%d %b %y, %H:%M") %></td>
+            <td><%= order.customer&.name %></td>
+            <td><%= order.customer&.business_name %></td>
+            <td><%= order.order_date&.strftime("%d %b %y") %></td>
             <td><span class="badge bg-<%= status_color(order.status) %>"><%= order.status.titleize %></span></td>
             <td class="fw-bold">₹<%= order.total_amount %></td>
             <td>

@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
-  has_one_attached :image
+  # has_one_attached :image
+  has_many :inventories
 
   validates :name, :price, :category, presence: true
 
@@ -83,4 +84,13 @@ class Item < ApplicationRecord
   def self.price_map
     all.pluck(:id, :price).to_h
   end
+
+  def total_available_stock
+    inventories.sum(:remaining_quantity)
+  end
+
+  def out_of_stock?
+    total_available_stock <= 0
+  end
+
 end
