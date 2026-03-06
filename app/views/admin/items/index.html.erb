@@ -1,10 +1,25 @@
-<div class="container py-4">
+<div class="container py-4" style="max-width:1500px;">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Inventory Items</h1>
     <%= link_to 'Add New Item', new_admin_item_path, class: 'btn btn-primary' %>
   </div>
   
   <div class="card border-0 shadow-sm mb-4">
+    <div class="mb-3 d-flex gap-2">
+
+      <%= link_to "All Items",
+            admin_items_path,
+            class: "btn #{params[:type].blank? ? 'btn-dark' : 'btn-outline-dark'}" %>
+
+      <%= link_to "Hotel Items",
+            admin_items_path(type: "hotel"),
+            class: "btn #{params[:type] == 'hotel' ? 'btn-success' : 'btn-outline-success'}" %>
+
+      <%= link_to "Seller Items",
+            admin_items_path(type: "seller"),
+            class: "btn #{params[:type] == 'seller' ? 'btn-primary' : 'btn-outline-primary'}" %>
+
+    </div>
     <div class="card-body">
       <%= form_with url: admin_items_path, method: :get, class: "row g-3" do |f| %>
         <div class="col-md-6">
@@ -26,34 +41,31 @@
       <tr>
         <th>Image</th>
         <th>Name</th>
-        <th>Category</th>
-        <th>Hotel Price/MRP</th>
+        <!-- <th>Category</th> -->
+        <th>Sub Category</th>
+        <th>Grade</th>
+        <th>Hotel Price</th>
         <th>Seller Price</th>
-        <th>Stock Unit</th>
+        <th width="100px;">Show for Hotel</th>
+        <th width="100px;">Show for Seller</th>
+        <th>Priority</th>
         <th>Actions</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <% @items.each do |item| %>
-        <tr>
-          <td>
-            <img src="/items/<%= item.image_path %>" style="width: 50px; height: 50px; object-fit: cover;" class="rounded border">
-          </td>
-          <td class="fw-bold"><%= item.name %></td>
-          <td><span class="badge bg-info text-dark"><%= item.category %></span></td>
-          <td>
-            ₹<%= item.price %> 
-            <small class="text-muted text-decoration-line-through">₹<%= item.mrp %></small>
-          </td>
-          <td>
-            ₹<%= item.seller_price.to_f %> 
-          </td>
-          <td><%= item.quantity %> <%= item.unit %></td>
-          <td>
-            <%= link_to 'Edit', edit_admin_item_path(item), class: 'btn btn-sm btn-outline-primary' %>
-            <%#= link_to 'Delete', item_path(item), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger' %>
+      <%# <% @grouped_items.each do |sub_category, items| %>
+      <% Item::SUB_CATEGORIES.each do |sub_category| %>
+        <% items = @grouped_items[sub_category] %>
+        <tr class="table-primary">
+          <td colspan="11" class="fw-bold">
+            <%= sub_category.present? ? sub_category.titleize : "Uncategorized" %>
+            (<%= items&.count %>)
           </td>
         </tr>
+        <% items.each do |item| %>
+          <%= render partial: "item_row", locals: { item: item } %>
+        <% end if items.present? %>
       <% end %>
     </tbody>
   </table>

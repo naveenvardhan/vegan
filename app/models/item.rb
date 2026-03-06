@@ -2,12 +2,14 @@ class Item < ApplicationRecord
   # has_one_attached :image
   has_many :inventories
 
-  validates :name, :price, :category, presence: true
-
+  GRADES = %w[A B].freeze
+  SUB_CATEGORIES = ['Leaves', 'Roots', 'Gourds', 'Tomato', 'Cabbage', 'Beans', 'Others']
+  
   VEG_IMAGES = {
     "Radish" => "radish.jpg",
     "Cucumber" => "cucumber.jpeg",
     "Green Turnip" => "kohlrabi.jpeg", # Kohlrabi is another name for Turnip/Navilukosu
+    "Knol Khol" => "kohlrabi.jpeg", # Kohlrabi is another name for Turnip/Navilukosu
     "Onion" => "onion.jpeg",
     "Potato" => "potato.jpg",
     "Ivy Gourd (Tondekayi)" => "ivy-gourd.jpeg",
@@ -67,6 +69,13 @@ class Item < ApplicationRecord
     "Mushroom" => "mushroom.jpeg",
     "Tomato Hybrid / Seeds" => "tomato-hybrid.jpeg",
   }.freeze
+  
+  validates :name, :price, :category, presence: true
+  validates :grade, inclusion: { in: GRADES }#, allow_nil: true
+
+  scope :for_seller, -> { where(show_for_seller: true) }
+  scope :for_hotel, -> { where(show_for_hotel: true) }
+  scope :by_grade, ->(grade) { where(grade: grade) if grade.present? }
 
   def image_path
     filename = VEG_IMAGES[name] || "placeholder.png"
@@ -75,6 +84,7 @@ class Item < ApplicationRecord
 
   def get_price(customer = nil)
     # binding.pry
+    
     business_type = customer&.business_type || 'Hotels & Restaurants'
     if business_type == 'Seller'
       seller_price.to_i

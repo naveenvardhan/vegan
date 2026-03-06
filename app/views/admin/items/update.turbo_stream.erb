@@ -1,0 +1,7 @@
+<%#= turbo_stream.replace "item_#{@item.id}" do %>
+  <%#= render partial: "item_row", locals: { item: @item } %>
+<%# end %>
+
+<%= turbo_stream.update "save_btn_#{@item.id}" do %>
+  <small>Saved</small>
+<% end %>

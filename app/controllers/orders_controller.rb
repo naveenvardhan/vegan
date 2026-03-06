@@ -50,13 +50,28 @@ class OrdersController < ApplicationController
       @order.update_total
       
       # Clear the cart
-      @cart.cart_items.destroy_all
+      @cart.clear_cart!
       session[:cart_token] = nil # Optional: reset guest session
       
       redirect_to order_path(@order), notice: "Order placed successfully!"
     else
       render :new, status: :unprocessable_entity
     end
+  end
+  
+  def repeat
+    order = Order.find(params[:id])
+
+    @cart.clear_cart!
+    order.order_items.each do |order_item|
+      CartItem.create(
+        cart: @cart,
+        item_id: order_item.item_id,
+        quantity: order_item.quantity
+      )
+    end
+
+    redirect_to cart_path, notice: "Last order added to cart"
   end
 
   def show

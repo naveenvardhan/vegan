@@ -1,42 +1,57 @@
-<%= form_with(model: [:admin, item], class: "row g-3") do |f| %>
+<%= form_with(model: [:admin, item], local: false, class: "row g-3") do |f| %>
   <div class="col-md-6">
     <%= f.label :name, class: "form-label" %>
     <%= f.text_field :name, class: "form-control" %>
   </div>
+  
+    <div class="col-md-6">
+      <%= f.label :unit, class: "form-label" %>
+      <%= f.select :unit, ['kg', 'pc', 'gm', 'ltr'], {}, { class: "form-select" } %>
+    </div>
 
-  <div class="col-md-6">
+  <!-- <div class="col-md-4">
     <%= f.label :category, class: "form-label" %>
     <%= f.select :category, ['vegetables', 'fruits', 'grocery'], { prompt: 'Select Category' }, { class: "form-select" } %>
+  </div> -->
+  
+  <div class="col-md-6 mb-3">
+    <%= f.label :sub_category %>
+    <%= f.select :sub_category, Item::SUB_CATEGORIES, { prompt: 'Select Sub Category' }, { class: "form-select" } %>
+  </div>
+  
+  <div class="col-md-6 mb-3">
+    <%= f.label :grade %>
+    <%= f.select :grade,
+          Item::GRADES,
+          { prompt: "Select Grade" },
+          class: "form-select" %>
   </div>
 
-  <div class="col-md-4">
-    <%= f.label :mrp, "MRP (₹)", class: "form-label" %>
-    <%= f.number_field :mrp, step: 0.01, class: "form-control" %>
-  </div>
-
-  <div class="col-md-4">
+  <div class="col-md-6">
     <%= f.label :price, "Hotel Price (₹)", class: "form-label" %>
     <%= f.number_field :price, step: 0.01, class: "form-control" %>
   </div>
   
-  <div class="col-md-4">
+  <div class="col-md-6">
     <%= f.label :seller_price, "Seller Price (₹)", class: "form-label" %>
     <%= f.number_field :seller_price, step: 0.01, class: "form-control" %>
   </div>
+  
+  <div class="col-md-6 mb-3">
+    <div class="form-check mt-4">
+      <%= f.check_box :show_for_seller, class: "form-check-input" %>
+      <%= f.label :show_for_seller, class: "form-check-label" %>
+    </div>
 
-  <div class="col-md-3">
-    <%= f.label :quantity, class: "form-label" %>
-    <%= f.text_field :quantity, class: "form-control", placeholder: "e.g. 500" %>
+    <div class="form-check">
+      <%= f.check_box :show_for_hotel, class: "form-check-input" %>
+      <%= f.label :show_for_hotel, class: "form-check-label" %>
+    </div>
   </div>
-
-  <div class="col-md-3">
-    <%= f.label :unit, class: "form-label" %>
-    <%= f.select :unit, ['kg', 'pc', 'gm', 'ltr'], {}, { class: "form-select" } %>
-  </div>
-
-  <div class="col-12">
-    <%= f.label :description, class: "form-label" %>
-    <%= f.text_area :description, rows: 3, class: "form-control" %>
+  
+  <div class="col-md-6">
+    <%= f.label :priority, class: "form-label" %>
+    <%= f.number_field :priority, step: 1, class: "form-control" %>
   </div>
 
   <div class="col-12 mt-4">

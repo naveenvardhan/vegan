@@ -20,7 +20,16 @@
           <h2 class="m-0">Log in</h2>
         </div>
         
-        <div class="card-body p-4">
+        <div class="card-body p-4 pt-2">
+          <div class="">
+            New User? <a href="/customers/sign_up"> Create Account </a>
+            <!-- link_to "Create Account", new_customer_registration_path %> -->
+
+            <%#= render "devise/shared/links" %>
+            <br>
+            <br>
+          </div>
+          
           <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { data: { turbo: false } }) do |f| %>
             <% if resource.errors.any? %>
               <div class="alert alert-danger">
@@ -67,12 +76,7 @@
             </div>
           <% end %>
 
-          <div class="p-2">
-            <a href="/customers/sign_up"> Create Account </a>
-            <!-- link_to "Create Account", new_customer_registration_path %> -->
-
-            <%#= render "devise/shared/links" %>
-          </div>
+          
         </div>
         
       </div>

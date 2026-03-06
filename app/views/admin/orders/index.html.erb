@@ -39,6 +39,7 @@
     <table class="table table-hover shadow-sm">
       <thead class="table-dark">
         <tr>
+          <th>Order No.</th>
           <th>Invoice #</th>
           <th>Customer</th>
           <th>Business</th>
@@ -51,6 +52,7 @@
       <tbody>
         <% @orders.each do |order| %>
           <tr>
+            <td><%= order.id %></td>
             <td class="fw-bold text-success"><%= link_to order.invoice_number, admin_order_path(order), class: '' %></td>
             <td><%= order.customer&.name %></td>
             <td><%= order.customer&.business_name %></td>

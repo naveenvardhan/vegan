@@ -14,11 +14,16 @@ Rails.application.routes.draw do
   get "profile", to: "home#profile"
   get   "profile/edit", to: "home#edit_profile",   as: :edit_profile
   patch "profile",      to: "home#update_profile", as: :update_profile
+  get "repeat_order/:id", to: "orders#repeat", as: :repeat_order
 
   # resources :items
   resources :cart_items, only: [:create]
   resource :cart, only: [:show]
-  resources :orders, only: [:new, :create, :show]
+  resources :orders, only: [:new, :create, :show]# do
+  #   member do
+  #     get
+  #   end
+  # end
   resources :addresses, only: [:new, :create]
 
 

@@ -1,0 +1,62 @@
+<tr id="item_<%= item.id %>">
+    <td>
+      <img src="/items/<%= item.image_path %>" style="width: 50px; height: 50px; object-fit: cover;" class="rounded border">
+    </td>
+  <%= form_with model: [:admin, item], local: false do |f| %>
+    <td ><span class="fw-bold"><%= item.name %></span> / <%= item.unit %></td>
+    <!-- <td><span class="badge bg-info text-dark"><%= item.category %></span></td> -->
+    <td>
+      <%= f.select :sub_category, Item::SUB_CATEGORIES, {},
+            class: "form-select form-select-sm" %>
+    </td>
+    <!-- <td ><%= item.grade %></td> -->
+    <td width="100px;">
+      <%= f.select :grade,
+            ["A","B"],
+            {},
+            class: "form-select form-select-sm" %>
+    </td>
+    <td width="120px;">
+      <%# ₹<%= item.price %> 
+      <%= f.number_field :price, value: item.price.to_i,
+        step: 1,
+        class: "form-control form-control-sm" %>
+      <!-- <small class="text-muted text-decoration-line-through">₹<%= item.mrp %></small> -->
+    </td>
+    <!-- <td>
+      ₹<%= item.seller_price.to_f %> 
+    </td> -->
+    <td width="120px;">
+      <%= f.number_field :seller_price, value: item.seller_price.to_i,
+            step: 1,
+            class: "form-control form-control-sm" %>
+    </td>
+    <td>
+      <%# <%= item.show_for_hotel ? 'Yes' : 'No' %> 
+      <div class="form-check">
+        <%= f.check_box :show_for_hotel, class: "form-check-input" %>
+        <small>Hotel</small>
+      </div>
+    </td>
+    <td>
+      <%# <%= item.show_for_seller ? 'Yes' : 'No' %> 
+      <div class="form-check">
+        <%= f.check_box :show_for_seller,
+              class: "form-check-input" %>
+        <small>Seller</small>
+      </div>
+    </td>
+    <td width="120px;">
+      <%= f.number_field :priority, value: item.priority.to_i,
+            step: 1,
+            class: "form-control form-control-sm" %>
+    </td>
+    <td id="save_btn_<%= item.id %>">
+      <%= f.submit "Save", class: "btn btn-sm btn-success" %>
+    </td>
+    <td>
+      <%= link_to 'Edit', edit_admin_item_path(item), class: 'btn btn-sm btn-outline-primary' %>
+    </td>
+      <%#= link_to 'Delete', item_path(item), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger' %>
+  <% end %>
+</tr>

@@ -12,4 +12,9 @@ class Cart < ApplicationRecord
   def total_quantity
     cart_items.sum(:quantity)
   end
+  
+  # Clear the cart
+  def clear_cart!
+    self.cart_items.destroy_all
+  end
 end

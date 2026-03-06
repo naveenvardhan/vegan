@@ -1,48 +1,54 @@
-<% items.each do |item| %>
-  <div class="d-flex align-items-center py-1 border-bottom">
+<% Item::SUB_CATEGORIES.each do |sub_category| %>
+  <% sub_items = items[sub_category] %>
+  <div class="" style="border-bottom: 2px solid green; ">
+    <% sub_items.each do |item| %>
+      <div class="d-flex align-items-center py-1 border-bottom">
 
-    <% file_exists = File.exist?(Rails.public_path.join("items", item.image_path)) %>
+        <% file_exists = File.exist?(Rails.public_path.join("items", item.image_path)) %>
 
-    <% if file_exists %>
-      <img src="/items/<%= item.image_path %>"
-           class="rounded-3 me-3"
-           style="width: 70px; height: 70px; object-fit: cover;">
-    <% else %>
-      <img src="/items/placeholder.png"
-           class="rounded-3 me-3"
-           style="width: 70px; height: 70px; object-fit: cover;">
-    <% end %>
+        <% if file_exists %>
+          <img src="/items/<%= item.image_path %>"
+               class="rounded-3 me-3"
+               style="width: 70px; height: 70px; object-fit: cover;">
+        <% else %>
+          <img src="/items/placeholder.png"
+               class="rounded-3 me-3"
+               style="width: 70px; height: 70px; object-fit: cover;">
+        <% end %>
 
-    <div class="flex-grow-1">
-      <div class="fw-bold text-dark">
-        <%= item.name %>
-      </div>
+        <div class="flex-grow-1">
+          <div class="fw-bold text-dark">
+            <%= item.name %>
+          </div>
 
-      <div class="text-success">
-        ₹<%= item.get_price(current_customer) %> / <%= item.unit %>
-      </div>
-      
-      <% if true || item.unit == 'kg' %>
-        <div class="mt-1 d-flex gap-2">
-          <span class="font-10 pb-1 p-2 " style="color:gray;">Min: 2</span>
-          <% [3, 5, 10].each do |qty| %>
-            <%= button_to cart_items_path(item_id: item.id, quantity: qty),
-                  method: :post,
-                  form: { data: { turbo_frame: "item_#{item.id}_cart_control" } },
-                  class: "btn btn-outline-success rounded-4 btn-sm px-2 py-0", style: "border-color: #e6f0d1; color: grey;" do %>
-              <%= qty %>
-            <% end %>
+          <div class="text-success">
+            ₹<%= item.get_price(current_customer) %> / <%= item.unit %>
+          </div>
+          
+          <% if true || item.unit == 'kg' %>
+            <div class="mt-1 d-flex gap-2">
+              <span class="font-10 pb-1 p-2 " style="color:gray;">Min: 2</span>
+              <% [3, 5, 10].each do |qty| %>
+                <%= button_to cart_items_path(item_id: item.id, quantity: qty),
+                      method: :post,
+                      form: { data: { turbo_frame: "item_#{item.id}_cart_control" } },
+                      class: "btn btn-outline-success rounded-4 btn-sm px-2 py-0", style: "border-color: #e6f0d1; color: grey;" do %>
+                  <%= qty %>
+                <% end %>
+              <% end %>
+            </div>
           <% end %>
         </div>
-      <% end %>
-    </div>
-    <div class="flex-grow-1" style="max-width:115px;">
-      <div class="mt-2">
-        <%= turbo_frame_tag "item_#{item.id}_cart_control" do %>
-          <%= render "item", item: item %>
-        <% end %>
-      </div>
-    </div>
+        <div class="flex-grow-1" style="max-width:115px;">
+          <div class="mt-2">
+            <%= turbo_frame_tag "item_#{item.id}_cart_control" do %>
+              <%= render "item", item: item %>
+            <% end %>
+          </div>
+        </div>
 
+      </div>
+    <% end if sub_items.present? %>
   </div>
+  <!-- <hr> -->
 <% end %>
