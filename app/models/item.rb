@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   has_many :inventories
 
   GRADES = %w[A B].freeze
-  SUB_CATEGORIES = ['Leaves', 'Roots', 'Gourds', 'Tomato', 'Cabbage', 'Beans', 'Others']
+  SUB_CATEGORIES = ['Bags', 'Leafy', 'Fruiting', 'Gourds', 'Flowers', 'Beans and Peas', 'Roots', 'Bulbs']
   
   VEG_IMAGES = {
     "Radish" => "radish.jpg",
@@ -15,6 +15,7 @@ class Item < ApplicationRecord
     "Ivy Gourd (Tondekayi)" => "ivy-gourd.jpeg",
     "Broccoli" => "broccolli.jpeg",
     "Cabbage" => "cabbage.jpg",
+    "Cabbage local" => "cabbage.jpg",
     "Sambar Cucumber" => "sambar-cucumber.jpeg",
     "Ladies Finger" => "ladies_finger.jpg",
     "Bottle Gourd" => "bottle-gourd.jpeg",
@@ -29,6 +30,7 @@ class Item < ApplicationRecord
     "Bitter Gourd" => "bitter-gourd.webp", # Check if Chikkadi matches your bitter-gourd image
     "Beans - Chikkadi Kai" => "Chikkadi-kai.jpg", # Check if Chikkadi matches your bitter-gourd image
     "Beans - Cow Pea" => "beans-cowpeas.webp",
+    "Alsandekayi" => "beans-cowpeas.webp",
     "Tomato Nati" => "tomato.jpeg",
     "Ginger" => "ginger.jpg",
     "Garlic" => "garlic.webp",
@@ -38,16 +40,20 @@ class Item < ApplicationRecord
     "Bajji Chilli" => "bajji-chilli.jpeg",
     "Curry Leaves" => "Curryleaves.webp",
     "Seeme Badnekayi" => "chowchow.webp",
+    "Chow chow" => "chowchow.webp",
     "Green Peas" => "Green Peas.jpg",
     "Brinjal Small White" => "Brinjal-white.webp",
+    "Brinjal (White round)" => "Brinjal-white.webp",
     "Brinjal Small Purple" => "brinjal-purple.jpeg",
     "Brinjal Bottle Black" => "brinjalbottleblack.jpg",
     "Brinjal Long Green" => "longbrinjal.jpg",
     "Ash Gourd (Boodu Kumbalakayi)" => "ash-guard.jpg",
+    "Ash Gourd" => "ash-guard.jpg",
     "Coconut" => "coconut.webp",
     "Lemon / Nimbe (Big)" => "lemon.webp",
     "Lemon (Nimbe)" => "lemon.webp",
     "Coriander (Big)" => "Coriander Nati.png",
+    "Coriander Nati (Big)" => "Coriander Nati.png",
     "Fenugreek (Menthe)" => "methi-leaves.jpg",
     "Spinach (Palak)" => "Spinach.jpg",
     "Dill Leaves (Sabbakshi)" => "dil-leaves.webp",
@@ -62,6 +68,7 @@ class Item < ApplicationRecord
     "Arvi" => "arvi.jpeg",
     "Green peas" => "peas.jpeg",
     "Raw Banana / Bale Kai" => "banana_raw.jpg",
+    "Raw Banana" => "banana_raw.jpg",
     "Avare Kai" => "avare-kai.jpeg",
     "Drumstick" => "drumstick.jpg",
     "Sweet Corn" => "sweet-corn.png",

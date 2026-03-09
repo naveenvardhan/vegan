@@ -12,6 +12,8 @@ class HomeController < ApplicationController
 
     if params[:grade].present?
       @items = @items.where(grade: params[:grade])
+    else
+      @items = @items.where(grade: 'A')
     end
 
     if params[:query].present?
