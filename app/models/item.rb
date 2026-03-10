@@ -77,7 +77,7 @@ class Item < ApplicationRecord
     "Tomato Hybrid / Seeds" => "tomato-hybrid.jpeg",
   }.freeze
   
-  validates :name, :price, :category, presence: true
+  validates :name, presence: true
   validates :grade, inclusion: { in: GRADES }#, allow_nil: true
 
   scope :for_seller, -> { where(show_for_seller: true) }

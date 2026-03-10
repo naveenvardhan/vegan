@@ -35,7 +35,7 @@ class Admin::ItemsController < Admin::BaseController
 
   def create
     @item = Item.new(item_params)
-    if @item.save
+    if @item.save!
       redirect_to admin_items_path, notice: "Item created successfully."
     else
       render :new, status: :unprocessable_entity
@@ -54,9 +54,13 @@ class Admin::ItemsController < Admin::BaseController
     @item = Item.find(params[:id])
 
     if @item.update(item_params)
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to admin_items_path, notice: "Updated successfully" }
+      if params[:item][:unit].present?
+        redirect_to admin_items_path, notice: "Updated successfully"
+      else
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to admin_items_path, notice: "Updated successfully" }
+        end
       end
     else
       render :edit
