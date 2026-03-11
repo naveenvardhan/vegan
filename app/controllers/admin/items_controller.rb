@@ -21,7 +21,7 @@ class Admin::ItemsController < Admin::BaseController
     end
 
     @items = @items.order(:priority)
-    @grouped_items = @items.group_by(&:sub_category)
+    @grouped_items = @items.group_by(&:sub_category).transform_values { |items| items.sort_by { |i| i.priority || 9999 } }
 
   end
 

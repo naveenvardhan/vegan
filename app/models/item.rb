@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   has_many :inventories
 
   GRADES = %w[A B].freeze
-  SUB_CATEGORIES = ['Bags', 'Leafy', 'Fruiting', 'Gourds', 'Flowers', 'Beans and Peas', 'Roots', 'Bulbs']
+  SUB_CATEGORIES = ['Bags', 'Leafy', 'Fruiting', 'Gourds', 'Flowers', 'Beans and Peas', 'Roots', 'Bulbs', 'Others']
   
   VEG_IMAGES = {
     "Radish" => "radish.jpg",

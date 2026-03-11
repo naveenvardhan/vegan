@@ -20,7 +20,7 @@ class HomeController < ApplicationController
       @items = @items.where("name ILIKE ?", "%#{params[:query]}%")
     end
     @items = @items.order(:priority)
-    @items = @items.group_by(&:sub_category)
+    @items = @items.group_by(&:sub_category).transform_values { |items| items.sort_by { |i| i.priority || 9999 } }
     if current_customer.present?
       @last_order = current_customer.orders.includes(order_items: :item).order(created_at: :desc).first
       # @last_order = Order.find 38
