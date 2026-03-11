@@ -4,6 +4,7 @@ class Item < ApplicationRecord
 
   GRADES = %w[A B].freeze
   SUB_CATEGORIES = ['Bags', 'Leafy', 'Fruiting', 'Gourds', 'Flowers', 'Beans and Peas', 'Roots', 'Bulbs', 'Others']
+  UNITS = ['kg', 'pc', 'bag', 'box', 'gm', 'ltr']
   
   VEG_IMAGES = {
     "Radish" => "radish.jpg",

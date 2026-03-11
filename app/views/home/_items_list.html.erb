@@ -1,3 +1,15 @@
+<div class="grade-filter-bar mb-1 mt-1 d-flex gap-2">
+  <%= link_to "Grade A",
+        root_path(grade: "A"),
+        class: "btn btn-outline-success btn-sm #{'active' if params[:grade].blank? || params[:grade] == 'A'}",
+        data: { turbo_frame: "items_list" } %>
+
+  <%= link_to "Grade B",
+        root_path(grade: "B"),
+        class: "btn btn-outline-success btn-sm #{'active' if params[:grade] == 'B'}",
+        data: { turbo_frame: "items_list" } %>
+</div>
+
 <% Item::SUB_CATEGORIES.each do |sub_category| %>
   <% sub_items = items[sub_category] %>
   <% if sub_items.present? %>
@@ -28,7 +40,7 @@
             
             <% if true || item.unit == 'kg' %>
               <div class="mt-1 d-flex gap-2">
-                <span class="font-10 pb-1 p-2 " style="color:gray;">Min: 2</span>
+                <span class="font-10 p-0 py-1 " style="color:gray;"><%= item.unit == 'bag' ? item.description : 'Min: 2' %></span>
                 <% [3, 5, 10].each do |qty| %>
                   <%= button_to cart_items_path(item_id: item.id, quantity: qty),
                         method: :post,
