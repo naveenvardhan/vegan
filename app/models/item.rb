@@ -7,10 +7,11 @@ class Item < ApplicationRecord
   UNITS = ['kg', 'pc', 'bag', 'box', 'gm', 'ltr']
   
   VEG_IMAGES = {
+    # A
     "Radish" => "radish.jpg",
     "Cucumber" => "cucumber.jpeg",
-    "Green Turnip" => "kohlrabi.jpeg", # Kohlrabi is another name for Turnip/Navilukosu
-    "Knol Khol" => "kohlrabi.jpeg", # Kohlrabi is another name for Turnip/Navilukosu
+    "Green Turnip" => "kohlrabi.jpeg",
+    "Knol Khol" => "kohlrabi.jpeg",
     "Onion" => "onion.jpeg",
     "Potato" => "potato.jpg",
     "Ivy Gourd (Tondekayi)" => "ivy-gourd.jpeg",
@@ -46,8 +47,10 @@ class Item < ApplicationRecord
     "Brinjal Small White" => "Brinjal-white.webp",
     "Brinjal (White round)" => "Brinjal-white.webp",
     "Brinjal Small Purple" => "brinjal-purple.jpeg",
+    "Brinjal (Purple)" => "brinjal-purple.jpeg",
     "Brinjal Bottle Black" => "brinjalbottleblack.jpg",
     "Brinjal Long Green" => "longbrinjal.jpg",
+    "Brinjal (Long Green)" => "longbrinjal.jpg",
     "Ash Gourd (Boodu Kumbalakayi)" => "ash-guard.jpg",
     "Ash Gourd" => "ash-guard.jpg",
     "Coconut" => "coconut.webp",
@@ -61,11 +64,11 @@ class Item < ApplicationRecord
     "Mint (Pudina)" => "pudina.jpeg",
     "Spring Onion" => "spring-onion.webp",
     "Cauliflower" => "cauli-flower.jpg",
-    "Cluster Beans / Gorikayi" => "gorikayi.jpeg",
-    "Arve soppu" => "arave-soppu.jpg",
+    "Cluster Beans (Gorikayi)" => "gorikayi.jpeg",
+    "Arve" => "arave-soppu.jpg",
     "Chilkarve" => "chilk-arve.png",
     "Chilkarve Soppu" => "chilk-arve.png",
-    "Dhantu soppu" => "dhantu.jpg",
+    "Dhantu" => "dhantu.jpg",
     "Arvi" => "arvi.jpeg",
     "Green peas" => "peas.jpeg",
     "Raw Banana / Bale Kai" => "banana_raw.jpg",
@@ -76,6 +79,17 @@ class Item < ApplicationRecord
     "Baby Corn" => "baby-corn.jpg",
     "Mushroom" => "mushroom.jpeg",
     "Tomato Hybrid / Seeds" => "tomato-hybrid.jpeg",
+    
+    # B
+    "Cluster Beans (Gorikayi) | Grade B" => "gorikayi.jpeg",
+    "Capsicum grade B" => "green-capsicum.jpg",
+    # Bags
+    "Tomato Nati A(22kg)" => "tomato-20-a.jpg",
+    "Tomato Hybrid / Seeds A(22kg)" => "tomato-hybrid.jpeg",
+    "Tomato Hybrid / Seeds A(12kg)" => "tomato-hybrid.jpeg",
+    "Capsicum A(25kg)" => "green-capsicum.jpg",
+    "Radish A (18kg)" => "radish-A.jpg",
+    "" => "",
   }.freeze
   
   validates :name, presence: true
