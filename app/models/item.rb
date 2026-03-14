@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   has_many :inventories
 
   GRADES = %w[A B].freeze
-  SUB_CATEGORIES = ['Bags', 'Leafy', 'Fruiting', 'Gourds', 'Flowers', 'Beans and Peas', 'Roots', 'Bulbs', 'Others']
+  SUB_CATEGORIES = ['Leafy', 'Fruiting', 'Gourds', 'Flowers', 'Beans and Peas', 'Roots', 'Bulbs', 'Others', 'Bags']
   UNITS = ['kg', 'pc', 'bag', 'box', 'gm', 'ltr']
   
   VEG_IMAGES = {
@@ -90,14 +90,22 @@ class Item < ApplicationRecord
     filename
   end
 
-  def get_price(customer = nil)
+  def get_price(is_seller = false)
     # binding.pry
     
-    business_type = customer&.business_type || 'Hotels & Restaurants'
-    if business_type == 'Seller'
+    # business_type = customer&.business_type || 'Hotels & Restaurants'
+    if is_seller
       seller_price.to_i
     else
       price.to_i
+    end
+  end
+  
+  def get_description(is_seller = false)
+    if is_seller
+      seller_remarks.to_s
+    else
+      description.to_s
     end
   end
 

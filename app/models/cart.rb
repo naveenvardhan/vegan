@@ -6,7 +6,7 @@ class Cart < ApplicationRecord
   belongs_to :customer, optional: true
 
   def total_price(customer = nil)
-    cart_items.sum { |ci| ci.item.get_price(customer) * ci.quantity }
+    cart_items.sum { |ci| ci.item.get_price(customer.is_seller?) * ci.quantity }
   end
 
   def total_quantity

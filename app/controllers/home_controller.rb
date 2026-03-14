@@ -5,8 +5,10 @@ class HomeController < ApplicationController
   
   def index
     if params[:seller] == 'true' || current_customer&.business_type == 'Seller'
+      @is_seller = true
       @items = Item.for_seller
     else
+      @is_seller = false
       @items = Item.for_hotel
     end
 

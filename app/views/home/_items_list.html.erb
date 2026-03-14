@@ -35,12 +35,12 @@
             </div>
 
             <div class="text-success">
-              ₹<%= item.get_price(current_customer) %> / <%= item.unit %>
+              ₹<%= item.get_price(@is_seller) %> / <%= item.unit %>
             </div>
             
             <% if true || item.unit == 'kg' %>
               <div class="mt-1 d-flex gap-2">
-                <span class="font-10 p-0 py-1 " style="color:gray;"><%= item.unit == 'bag' ? item.description : 'Min: 2' %></span>
+                <span class="font-10 p-0 py-1 " style="color:gray;"><%= item.unit == 'bag' ? item.get_description(@is_seller) : 'Min: 2' %></span>
                 <% [3, 5, 10].each do |qty| %>
                   <%= button_to cart_items_path(item_id: item.id, quantity: qty),
                         method: :post,

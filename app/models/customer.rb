@@ -19,6 +19,10 @@ class Customer < ApplicationRecord
   def update_default_address(add_id)
     self.addresses.where.not(id: add_id).update_all(is_default: false)
   end
+  
+  def is_seller?
+    self.business_type == 'Seller'
+  end
 
   private
 

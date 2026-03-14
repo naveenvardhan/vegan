@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
         @order.order_items.create!(
           item_id: ci.item_id,
           quantity: ci.quantity,
-          price_at_order: ci.item.get_price(current_customer)
+          price_at_order: ci.item.get_price(current_customer.is_seller?)
         )
       end
       @order.update_total

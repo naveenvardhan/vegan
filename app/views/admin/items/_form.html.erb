@@ -27,16 +27,6 @@
           class: "form-select" %>
   </div>
 
-  <div class="col-md-6">
-    <%= f.label :price, "Hotel Price (₹)", class: "form-label" %>
-    <%= f.number_field :price, step: 0.01, class: "form-control" %>
-  </div>
-  
-  <div class="col-md-6">
-    <%= f.label :seller_price, "Seller Price (₹)", class: "form-label" %>
-    <%= f.number_field :seller_price, step: 0.01, class: "form-control" %>
-  </div>
-  
   <div class="col-md-6 mb-3">
     <div class="form-check mt-4">
       <%= f.check_box :show_for_seller, class: "form-check-input" %>
@@ -55,8 +45,25 @@
   </div>
   
   <div class="col-md-6">
+    <strong>Hotel</strong><br>
+    <%= f.label :price, "Hotel Price (₹)", class: "form-label" %>
+    <%= f.number_field :price, step: 0.01, class: "form-control" %>
+  </div>
+  
+  <div class="col-md-6">
+    <strong>Seller</strong><br>
+    <%= f.label :seller_price, "Seller Price (₹)", class: "form-label" %>
+    <%= f.number_field :seller_price, step: 0.01, class: "form-control" %>
+  </div>
+  
+  <div class="col-md-6">
     <%= f.label :description, 'Remarks', class: "form-label" %>
     <%= f.text_field :description, class: "form-control" %>
+  </div>
+  
+  <div class="col-md-6">
+    <%= f.label :seller_remarks, 'Seller Remarks', class: "form-label" %>
+    <%= f.text_field :seller_remarks, class: "form-control" %>
   </div>
 
   <div class="col-12 mt-4">

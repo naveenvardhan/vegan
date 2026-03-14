@@ -39,8 +39,13 @@
               <% end %>
             </li>
             <li class="nav-item">
-              <%= link_to admin_items_path, class: "nav-link #{'active' if controller_name == 'items'}" do %>
-                <i class="bi bi-box-seam me-1"></i> Inventory
+              <%= link_to admin_items_path, class: "nav-link #{'active' if (controller_name == 'items' && params[:grade] != 'B')}" do %>
+                <i class="bi bi-box-seam me-1"></i> Grade A
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to admin_items_path(grade: 'B'), class: "nav-link #{'active' if (controller_name == 'items' && params[:grade] == 'B')}" do %>
+                <i class="bi bi-box-seam me-1"></i> Grade B
               <% end %>
             </li>
             <li class="nav-item">

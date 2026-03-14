@@ -11,14 +11,18 @@ class Admin::ItemsController < Admin::BaseController
     end
 
     # Filter by Category
-    if params[:category].present?
-      @items = @items.where(category: params[:category])
+    if params[:sub_category].present?
+      @items = @items.where(sub_category: params[:sub_category])
+    end
+
+    if params[:grade].present?
+      @items = @items.where(grade: params[:grade])
     end
     
-    if params[:type].present?
-      @items = @items.for_hotel if params[:type] == 'hotel'
-      @items = @items.for_seller if params[:type] == 'seller'
-    end
+    if params[:business_type].present?
+      @items = @items.for_hotel if params[:business_type] == 'hotel'
+      @items = @items.for_seller if params[:business_type] == 'seller'
+    end 
 
     @items = @items.order(:priority)
     @grouped_items = @items.group_by(&:sub_category).transform_values { |items| items.sort_by { |i| i.priority || 9999 } }
@@ -79,6 +83,6 @@ class Admin::ItemsController < Admin::BaseController
   end
 
   def item_params
-    params.require(:item).permit(:name, :category, :mrp, :price, :seller_price, :quantity, :unit, :description, :grade, :sub_category, :show_for_hotel, :show_for_seller, :priority)
+    params.require(:item).permit(:name, :category, :mrp, :price, :seller_price, :quantity, :unit, :description, :seller_remarks, :grade, :sub_category, :show_for_hotel, :show_for_seller, :priority)
   end
 end
