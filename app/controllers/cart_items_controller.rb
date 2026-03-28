@@ -42,7 +42,7 @@ class CartItemsController < ApplicationController
           
           turbo_stream.replace("item_#{@item.id}_cart_control_mobile", partial: "home/item", locals: { item: @item }),
           # Update the line total for this specific item in the cart table
-          turbo_stream.update("item_#{@item.id}_line_total", "(₹#{@cart_item.quantity * @item.get_price(current_customer.is_seller?)})"),
+          turbo_stream.update("item_#{@item.id}_line_total", "(₹#{@cart_item.quantity * @item.get_price(current_customer&.is_seller?)})"),
           # Update the grand total in the sidebar
           turbo_stream.update("cart_grand_total", "₹#{total_price}"),
           # Update the sidebar items total

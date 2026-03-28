@@ -30,8 +30,8 @@
                         </div>
                       </td>
                       <td>
-                        ₹<%= cart_item.item.get_price(current_customer.is_seller?) %><br>
-                        <span class="text-center pe-4 fw-bold" id="item_<%= cart_item.item.id %>_line_total" style="font-size: 13px;">(₹<%= cart_item.item.get_price(current_customer.is_seller?) * cart_item.quantity %>)</span>
+                        ₹<%= cart_item.item.get_price(current_customer&.is_seller?) %><br>
+                        <span class="text-center pe-4 fw-bold" id="item_<%= cart_item.item.id %>_line_total" style="font-size: 13px;">(₹<%= cart_item.item.get_price(current_customer&.is_seller?) * cart_item.quantity %>)</span>
                       </td>
                       <td style="width: 160px;">
                         <%# Reuse your +/- buttons here %>
